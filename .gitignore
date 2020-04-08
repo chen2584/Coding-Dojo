@@ -106,3 +106,6 @@ dist
 # Dotnet build file
 bin
 obj
+
+# Visual Studio Code
+.vscode
