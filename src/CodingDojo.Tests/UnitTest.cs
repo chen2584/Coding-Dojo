@@ -18,11 +18,11 @@ namespace CodingDojo.Tests
         {
             var boardGame = new BoardGame();
             boardGame.TakeSlot(isX: true, row: 3, column: 1);
-            boardGame.TakeSlot(isX: true, row: 3, column: 2);
-            boardGame.TakeSlot(isX: true, row: 3, column: 3);
+            boardGame.TakeSlot(isX: true, row: 2, column: 2);
+            boardGame.TakeSlot(isX: true, row: 1, column: 3);
             
             var winner = boardGame.GetWinner();
-            Assert.Equal(BoardGamePlayerType.Y.ToString(), winner);
+            Assert.Equal(BoardGamePlayerType.X.ToString(), winner);
         }
     }
 }

@@ -8,13 +8,8 @@ namespace CodingDojo
 {
     public class BoardGame : IBoardGame
     {
-        private BoardGamePlayerType?[,] boardGame = new BoardGamePlayerType?[3 ,3];
-
-        private int GetBoardGameRowLength()
-            => boardGame.GetLength(0);
-
-        private int GetBoardGameColumnLength()
-            => boardGame.GetLength(1);
+        private const int _boardLength = 3;
+        private BoardGamePlayerType?[,] _boardGame = new BoardGamePlayerType?[_boardLength, _boardLength];
 
         private BoardGamePlayerType GetBoardGamePlayerType(bool isX)
             => (isX) ? BoardGamePlayerType.X : BoardGamePlayerType.Y;
@@ -34,14 +29,13 @@ namespace CodingDojo
 
         private BoardGamePlayerType? GetRowWinner()
         {
-            for (var column = 0; column < GetBoardGameColumnLength(); column++)
+            for (var column = 0; column < _boardLength; column++)
             {
                 var dictPlayerScore = new Dictionary<BoardGamePlayerType, int>();
 
-                var rowLength = GetBoardGameRowLength();
-                for (var row = 0; row < GetBoardGameRowLength(); row++)
+                for (var row = 0; row < _boardLength; row++)
                 {
-                    var boardSlot = boardGame[row, column];
+                    var boardSlot = _boardGame[row, column];
                     if (boardSlot.HasValue)
                     {
                         var boardSlotValue = boardSlot.Value;
@@ -53,7 +47,7 @@ namespace CodingDojo
                     }
                 }
 
-                var winner = GetWinner(dictPlayerScore, rowLength);
+                var winner = GetWinner(dictPlayerScore, _boardLength);
                 if (winner.HasValue)
                 {
                     return winner;
@@ -65,14 +59,13 @@ namespace CodingDojo
 
         private BoardGamePlayerType? GetColumnWinner()
         {
-            for (var row = 0; row < GetBoardGameRowLength(); row++)
+            for (var row = 0; row < _boardLength; row++)
             {
                 var dictPlayerScore = new Dictionary<BoardGamePlayerType, int>();
 
-                var columnLength = GetBoardGameColumnLength();
-                for (var column = 0; column < columnLength; column++)
+                for (var column = 0; column < _boardLength; column++)
                 {
-                    var boardSlot = boardGame[row, column];
+                    var boardSlot = _boardGame[row, column];
                     if (boardSlot.HasValue)
                     {
                         var boardSlotValue = boardSlot.Value;
@@ -84,7 +77,7 @@ namespace CodingDojo
                     }
                 }
 
-                var winner = GetWinner(dictPlayerScore, columnLength);
+                var winner = GetWinner(dictPlayerScore, _boardLength);
                 if (winner.HasValue)
                 {
                     return winner;
@@ -94,16 +87,62 @@ namespace CodingDojo
             return null;
         }
 
+        private BoardGamePlayerType? GetTopDiagonalWinner()
+        {
+            var dictPlayerScore = new Dictionary<BoardGamePlayerType, int>();
+            for (var index = 0; index < _boardLength; index++)
+            {
+                var boardSlot = _boardGame[index, index];
+                if (boardSlot.HasValue)
+                {
+                    var boardSlotValue = boardSlot.Value;
+                    if (!dictPlayerScore.ContainsKey(boardSlotValue)) // Initial if not exists
+                    {
+                        dictPlayerScore[boardSlotValue] = 0; 
+                    }
+                    dictPlayerScore[boardSlotValue]++;
+                }
+            }
+            var winner = GetWinner(dictPlayerScore, _boardLength);
+            return winner;
+        }
+
+        private BoardGamePlayerType? GetBottomDiagonalWinner()
+        {
+            var count = 0;
+            var dictPlayerScore = new Dictionary<BoardGamePlayerType, int>();
+            for (var index = _boardLength; index > 0; index--)
+            {
+                var boardSlot = _boardGame[index-1, count];
+                if (boardSlot.HasValue)
+                {
+                    var boardSlotValue = boardSlot.Value;
+                    if (!dictPlayerScore.ContainsKey(boardSlotValue)) // Initial if not exists
+                    {
+                        dictPlayerScore[boardSlotValue] = 0; 
+                    }
+                    dictPlayerScore[boardSlotValue]++;
+                }
+
+                count++;
+            }
+            var winner = GetWinner(dictPlayerScore, _boardLength);
+            return winner;
+        }
+
+        private BoardGamePlayerType? GetDiagonalWinner()
+            => GetTopDiagonalWinner() ?? GetBottomDiagonalWinner();
+
         public string GetWinner()
         {
-            var winner = GetRowWinner() ?? GetColumnWinner();
+            var winner = GetRowWinner() ?? GetColumnWinner() ?? GetDiagonalWinner();
             var winnerString = Convert.ToString(winner);
             return winnerString;
         }
 
         public bool TakeSlot(bool isX, int row, int column)
         {
-            ref var boardSlot = ref boardGame[(row-1), (column-1)];
+            ref var boardSlot = ref _boardGame[(row-1), (column-1)];
             if (!boardSlot.HasValue)
             {
                 var boardPlayerType = GetBoardGamePlayerType(isX);
