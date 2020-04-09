@@ -14,6 +14,7 @@ namespace CodingDojo
         private BoardGamePlayerType GetBoardGamePlayerType(bool isX)
             => (isX) ? BoardGamePlayerType.X : BoardGamePlayerType.Y;
 
+        #region Check for Winner
         private BoardGamePlayerType? GetWinner(Dictionary<BoardGamePlayerType, int> dictPlayerScore, int desiredScore)
         {
             foreach (var boardPlayerType in dictPlayerScore)
@@ -109,11 +110,11 @@ namespace CodingDojo
 
         private BoardGamePlayerType? GetBottomDiagonalWinner()
         {
-            var count = 0;
+            var column = 0;
             var dictPlayerScore = new Dictionary<BoardGamePlayerType, int>();
-            for (var index = _boardLength; index > 0; index--)
+            for (var row = _boardLength; row > 0; row--)
             {
-                var boardSlot = _boardGame[index-1, count];
+                var boardSlot = _boardGame[row-1, column];
                 if (boardSlot.HasValue)
                 {
                     var boardSlotValue = boardSlot.Value;
@@ -124,7 +125,7 @@ namespace CodingDojo
                     dictPlayerScore[boardSlotValue]++;
                 }
 
-                count++;
+                column++;
             }
             var winner = GetWinner(dictPlayerScore, _boardLength);
             return winner;
@@ -132,6 +133,7 @@ namespace CodingDojo
 
         private BoardGamePlayerType? GetDiagonalWinner()
             => GetTopDiagonalWinner() ?? GetBottomDiagonalWinner();
+        #endregion
 
         public string GetWinner()
         {

@@ -1,9 +1,0 @@
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\bin\Debug\netstandard2.0\CodingDojo.deps.json
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\bin\Debug\netstandard2.0\CodingDojo.dll
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\bin\Debug\netstandard2.0\CodingDojo.pdb
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.csprojAssemblyReference.cache
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.csproj.CoreCompileInputs.cache
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.AssemblyInfoInputs.cache
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.AssemblyInfo.cs
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.dll
-D:\MyWork\DotNet\Coding-Dojo\src\CodingDojo\obj\Debug\netstandard2.0\CodingDojo.pdb
